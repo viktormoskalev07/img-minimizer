@@ -10,8 +10,9 @@ const path = require('path');
 const sharp = require('sharp');
 const chalk = require('chalk')
 const sizeOf = require('image-size');
+const fsExtra = require('fs-extra')
 
-
+fsExtra.emptyDirSync('./build');
 let ncp = require('ncp').ncp;
  
 ncp.limit = 16;
@@ -21,11 +22,10 @@ ncp.limit = 16;
         if (err) {
           return console.error(err);
         }
-      
        });
-       console.log(chalk.green('build was created'));
- }
-
+       console.log(chalk.green('build...'));
+ } 
+ 
 function makeImages(){
 
 
@@ -70,7 +70,7 @@ images.forEach(img => {
         } else {
           newSize= Math.round(newSize/divider);
         }
-        console.log ('file'+current+'from'+max+' change width from: ',chalk.blue(oldSize+'px'),'to', chalk.green(newSize+'px'));
+        console.log ('file '+current+' from '+max+' change width from: ',chalk.blue(oldSize+'px'),'to', chalk.green(newSize+'px'));
        
      sharp(img)
      .resize(newSize)
@@ -108,3 +108,4 @@ images.forEach(img => {
  makeImages();
  
  copyToBuild();
+ console.error('test');
